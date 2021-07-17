@@ -58,7 +58,7 @@ DEFAULT_NEBULA_SIZE = 500;
 function radiationNebula(position, size, colour, nebula_type)
 	colour = colour or {0.60, 0.00, 0.00, 1.00};
 	size = size or DEFAULT_NEBULA_SIZE;
-	nebula_type = nebula_type or "M07_Foundry_Radiation";
+	nebula_type = nebula_type or "m07_foundry_radiation";
 	return addNebula("polysurface5", nebula_type, position, colour, 0.0, size);
 end
 
@@ -73,11 +73,11 @@ function resourceAsteroid(position, type, ru_fraction)
 	type = type or "Asteroid_4";
 	ru_fraction = ru_fraction or 1;
 
-	addAsteroid(type, position, max(0, min(ru_fraction * 100, 100)), 0, random(0, 255), random(0, 255), random(0, 255));
+	return addAsteroid(type, position, max(0, min(ru_fraction * 100, 100)), 0, 0, 0, 0);
 end
 
 function resourcePatch(position, size, ru_fraction)
-	size = size or "small"; -- "small", "medium", "large"
+	size = size or "small"; -- "tiny", "small", "medium", "large"
 
 	if (size == "tiny") then
 		resourceAsteroid(position, "Asteroid_3", ru_fraction)
@@ -147,7 +147,6 @@ function makeCentralXNebula(y, length)
 	radiationNebula({0, y, 0})
 
 	local step = (DEFAULT_NEBULA_SIZE / 2) - (DEFAULT_NEBULA_SIZE / 20); -- game freaks out if they are spaced exactly per radius
-	print("step: " .. (step or "nil"));
 
 	for mirror = -1, 1, 2 do
 		-- +/-z
@@ -402,49 +401,72 @@ end
 function makeCentralRUs()
 	for i = -1, 1, 2 do
 		local offset = i * 2000;
-		resourcePatch({offset, 0, 0}, "small");
-		resourcePatch({offset, 0, 1000}, "tiny", 0.75);
-		resourcePatch({offset, 0, -1000}, "tiny", 0.75);
-		resourcePatch({offset, 0, 3500}, "tiny", 0.75);
-		resourcePatch({offset, 0, -3500}, "tiny", 0.75);
+		resourcePatch({offset, 0, 0}, "small", 2);
+		resourcePatch({offset, 0, 1000}, "tiny", 1.25);
+		resourcePatch({offset, 0, -1000}, "tiny", 1.25);
+		resourcePatch({offset, 0, 3500}, "tiny", 1.25);
+		resourcePatch({offset, 0, -3500}, "tiny", 1.25);
 	end
 end
 
-function makeOutpost(position)
-	local x = position[1];
-	local y = position[2];
-	local z = position[3];
-	addSquadron("debris-guard-p1-00", "junk_autoguns", 	{x + -500,	y + -150, 	z}, 			0, {0, 81, 0}, 0, 0);
-	addSquadron("debris-guard-p1-01", "junk_autoguns", 	{x + -100,	y + 100, 	z + 500}, 		0, {0, 30, 0}, 0, 0);
-	addSquadron("debris-guard-p1-02", "junk_autogunl", 	{x + -1000, y + 440, 	z - 200}, 		0, {0, -40, 0}, 0, 0);
-	addSquadron("debris-guard-p1-03", "junk_autoguns", 	{x + 0, 	y + 150, 	z}, 			0, {0, 20, 0}, 0, 0);
-	addSquadron("debris-guard-p1-04", "junk_autoguns", 	{x + 500, 	y + 280, 	z + 200}, 		0, {0, 25, 0}, 0, 0);
-	addSquadron("debris-guard-p1-05", "junk_autogunl", 	{x + 100, 	y + -440, 	z - 150},		0, {0, -75, 0}, 0, 0);
-	addSquadron("debris-guard-p1-06", "junk_autoguns", 	{x + 500, 	y + 350, 	z},		 		0, {0, 10, 0}, 0, 0);
-	addSquadron("debris-guard-p1-07", "junk_autoguns", 	{x + -100, 	y + 0, 		z - 400}, 		0, {0, 0, 0}, 0, 0);
-	addSquadron("debris-guard-p1-09", "junk_autogunl", 	{x + -900, 	y + 430,	z + 150},		0, {0, -100, 0}, 0, 0);
-	addSalvage("Slv_Chunk_Lrg03", 						{x + 0, 	y + -400,	z + 30},		400, 0, 0, 0, 0);
-	addSalvage("Slv_Chunk_Lrg03", 						{x + 300, 	y + 0, 		z - 50},		400, 0, 0, 0, 0);
-	addSalvage("Slv_Chunk_Lrg01", 						{x + -500, 	y + 100, 	z - 180},		250, 0, 0, 0, 0);
-	addSalvage("Slv_Chunk_Lrg01", 						{x + -900, 	y + -100, 	z + 100},		250, 0, 0, 0, 0);
-	addSalvage("Slv_Chunk_Lrg01", 						{x + 100, 	y + 150, 	z - 10},		250, 0, 0, 0, 0);
-	addSalvage("Slv_Chunk_Lrg01", 						{x + -500, 	y + 200,	z - 180},		250, 0, 0, 0, 0);
-	dustCloud(											{x + 0, 	y + 0,	 	z}, 4000,		{0.125, 1, 0.125, 1});
+function makeSmallPatches()
+	-- +z patches
+	resourcePatch({0, 0, 30000});
+	for i = -1, 1, 2 do
+		resourcePatch({i * 29000, random(-1000, 1000), 16000});
+		resourcePatch({i * 21000, random(-1000, 1000), 23000});
+	end
+	-- -z patches
+	resourcePatch({0, 0, -27000});
+	dustCloud({0, 0, -27000}, 1500);
+	for i = -1, 1, 2 do
+		local pos = {i * 31000, random(-1000, 1000), -15000}
+		resourcePatch(pos);
+		dustCloud(pos, 1500);
+	end
+end
+
+function makeDebrisBand()
+	local debris_attribs = {
+		{ type = "slv_chunk_lrg03", pos = {39137, 100, -1971} },
+		{ type = "slv_chunk_lrg03", pos = {-39000, -100, -900} },
+		{ type = "slv_chunk_lrg01", pos = {28994, 0, -18307} },
+		{ type = "slv_chunk_lrg01", pos = {22909, 0, -19046} },
+		{ type = "slv_chunk_lrg01", pos = {13773, 0, -24734} },
+		{ type = "slv_chunk_lrg01", pos = {4794, 0, -24976} },
+		{ type = "slv_chunk_lrg02", pos = {19696, 0, -22855} },
+		{ type = "slv_chunk_lrg02", pos = {24962, 0, -20286} },
+		{ type = "slv_chunk_lrg02", pos = {2260, 0, -27817} },
+		{ type = "slv_chunk_lrg02", pos = {-13707, 0, -23015} },
+		{ type = "slv_chunk_lrg02", pos = {-24875, 0, -19968} },
+		{ type = "slv_chunk_lrg02", pos = {-22704, 0, -21587} },
+		{ type = "slv_chunk_lrg01", pos = {-17964, 0, -23272} },
+		{ type = "slv_chunk_lrg01", pos = {-30770, 0, -17572} },
+		{ type = "slv_chunk_lrg04", pos = {-7210, 0, -26853} },
+		{ type = "slv_chunk_lrg04", pos = {-20286, 0, -21516} },
+		{ type = "slv_chunk_lrg04", pos = {15508, 0, -22762} },
+		{ type = "slv_chunk_lrg04", pos = {-27402, 0, -19373} },
+		{ type = "slv_chunk_sml03", pos = {-119, 0, -49325} },
+		{ type = "slv_chunk_sml03", pos = {403504, 0, -53863} }
+	};
+	for i, attribs in debris_attribs do
+		addSalvage(attribs.type, attribs.pos, 100, 0, 0, 0, 0);
+	end
 end
 
 function DetermChunk()
-	local p1_start = {
+	local p0_start = {
 		pos = {7000, 0, 0},
 		rot = {0, 90, 0}
 	};
-	local p2_start = {
+	local p1_start = {
 		pos = {-7000, 0, 0},
 		rot = {0, -90, 0}
 	};
 
 	-- start positions:
-	addPoint("StartPos0", p1_start.pos, p1_start.rot);
-	addPoint("StartPos1", p2_start.pos, p2_start.rot);
+	addPoint("StartPos0", p0_start.pos, p0_start.rot);
+	addPoint("StartPos1", p1_start.pos, p1_start.rot);
 	-- spectators:
 	addPoint("StartPos2", {-27876, 0, -32563}, {0, 90, 0});
 	addPoint("StartPos3", {-25572, 0, -34488}, {0, 90, 0});
@@ -460,12 +482,15 @@ function DetermChunk()
 	resourcePatch({-38500, 0, -1000}, "medium");
 	addSalvage("Slv_Chunk_Lrg03", {-39000, -100, -900}, 200, 0, 0, 0, 0); -- 1400ru
 
-	-- debris in the grooves of the X:
+	-- patches in the grooves of the center X:
 	resourcePatch({0, 0, -11500}, "medium");
-	-- sparse cluster (4690ru):
 	resourcePatch({0, 0, 11500}, "large");
 
-	makeOutpost({12000, 3500, 35000});
+	-- the ring of small ru spots:
+	makeSmallPatches();
+
+	-- debris band:
+	makeDebrisBand();
 end
 
 function NonDetermChunk()
