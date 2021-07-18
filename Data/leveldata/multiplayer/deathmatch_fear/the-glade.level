@@ -535,6 +535,6 @@ function NonDetermChunk()
 	setLevelShadowColour(0,0,0,1)
 	loadBackground("m01")
 	setSensorsManagerCameraDistances(10000, 100000)
-	setDefaultMusic("Data:sound/music/AMBIENT/AMB_05")
+	setDefaultMusic("Data:sound/music/deathmatch_fear/sc-terran-03")
 	setBattleMusic("Data:sound/music/STAGING/STAGING_05")
 end
