@@ -402,8 +402,8 @@ function makeCentralRUs()
 		resourcePatch({offset, 0, 0}, "small", 2);
 		resourcePatch({offset, 0, 1000}, "tiny", 1.25);
 		resourcePatch({offset, 0, -1000}, "tiny", 1.25);
-		resourcePatch({offset, 0, 3500}, "tiny", 1.25);
-		resourcePatch({offset, 0, -3500}, "tiny", 1.25);
+		resourcePatch({offset, 0, 2500}, "tiny", 1.25);
+		resourcePatch({offset, 0, -2500}, "tiny", 1.25);
 	end
 end
 
@@ -411,8 +411,8 @@ function makeSmallPatches()
 	-- +z patches
 	resourcePatch({0, 0, 30000});
 	for i = -1, 1, 2 do
-		resourcePatch({i * 29000, -600, 16000});
-		resourcePatch({i * 21000, 450, 23000});
+		resourcePatch({i * 29000, -6000, 11000});
+		resourcePatch({i * 21000, 450, 18000});
 	end
 	-- -z patches
 	resourcePatch({0, 0, -27000});
@@ -481,7 +481,7 @@ function DetermChunk()
 
 	-- central 'X' radiation:
 	for y = -7500, 7500, 500 do
-		makeCentralXNebula(y, 40);
+		makeCentralXNebula(y, 30);
 	end
 
 	-- triangle 'home' clouds
@@ -491,14 +491,13 @@ function DetermChunk()
 	makeCentralRUs();
 
 	-- patches in the triangle clouds:
-	resourcePatch({35000, 0, -2000}, "medium");
-	addSalvage("Slv_Chunk_Lrg03", {32000, 100, -1900}, 250, 0, 0, 0, 0);
-	resourcePatch({-35000, 0, -1000}, "medium");
-	addSalvage("Slv_Chunk_Lrg03", {-32000, -100, -900}, 250, 0, 0, 0, 0);
+	resourcePatch({30000, 0, -2000}, "medium");
+	addSalvage("Slv_Chunk_Lrg03", {25000, 100, -1900}, 250, 0, 0, 0, 0);
+	resourcePatch({-30000, 0, -1000}, "medium");
+	addSalvage("Slv_Chunk_Lrg03", {-25000, -100, -900}, 250, 0, 0, 0, 0);
 
 	-- patches in the grooves of the center X:
-	resourcePatch({0, 0, -11500}, "medium");
-	resourcePatch({0, 0, 11500}, "large");
+	resourcePatch({0, 0, 9500}, "large");
 
 	-- the ring of small ru spots:
 	makeSmallPatches();
