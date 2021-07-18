@@ -510,4 +510,5 @@ function NonDetermChunk()
 	loadBackground("m01")
 	setSensorsManagerCameraDistances(10000, 100000)
 	setDefaultMusic("Data:sound/music/deathmatch_fear/sc-terran-03")
+	setBattleMusic("Data:sound/music/deathmatch_fear/sc-terran-03")
 end
