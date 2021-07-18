@@ -427,30 +427,38 @@ function makeSmallPatches()
 end
 
 function makeDebrisBand()
+	local randY = function()
+		local rand_max = 200;
+		return random(-rand_max, rand_max);
+	end
 	local debris_attribs = {
-		{ type = "slv_chunk_lrg03", pos = {39137, 100, -1971} },
-		{ type = "slv_chunk_lrg03", pos = {-39000, -100, -900} },
-		{ type = "slv_chunk_lrg01", pos = {28994, 0, -18307} },
-		{ type = "slv_chunk_lrg01", pos = {22909, 0, -19046} },
-		{ type = "slv_chunk_lrg01", pos = {13773, 0, -24734} },
-		{ type = "slv_chunk_lrg01", pos = {4794, 0, -24976} },
-		{ type = "slv_chunk_lrg02", pos = {19696, 0, -22855} },
-		{ type = "slv_chunk_lrg02", pos = {24962, 0, -20286} },
-		{ type = "slv_chunk_lrg02", pos = {2260, 0, -27817} },
-		{ type = "slv_chunk_lrg02", pos = {-13707, 0, -23015} },
-		{ type = "slv_chunk_lrg02", pos = {-24875, 0, -19968} },
-		{ type = "slv_chunk_lrg02", pos = {-22704, 0, -21587} },
-		{ type = "slv_chunk_lrg01", pos = {-17964, 0, -23272} },
-		{ type = "slv_chunk_lrg01", pos = {-30770, 0, -17572} },
-		{ type = "slv_chunk_lrg04", pos = {-7210, 0, -26853} },
-		{ type = "slv_chunk_lrg04", pos = {-20286, 0, -21516} },
-		{ type = "slv_chunk_lrg04", pos = {15508, 0, -22762} },
-		{ type = "slv_chunk_lrg04", pos = {-27402, 0, -19373} },
-		{ type = "slv_chunk_sml03", pos = {-119, 0, -49325} },
-		{ type = "slv_chunk_sml03", pos = {403504, 0, -53863} }
+		{ type = "slv_chunk_lrg01", pos = {28994, randY(), -18307}, val = 2.5 },
+		{ type = "slv_chunk_lrg01", pos = {22909, randY(), -19046}, val = 2 },
+		{ type = "slv_chunk_lrg01", pos = {13773, randY(), -24734}, val = 1.5 },
+		{ type = "slv_chunk_lrg01", pos = {4794, randY(), -24976}, val = 2 },
+		{ type = "slv_chunk_lrg02", pos = {19696, randY(), -22855}, val = 3.25 },
+		{ type = "slv_chunk_lrg01", pos = {4594, randY(), -25976}, val = 0.9 },
+		{ type = "slv_chunk_lrg02", pos = {18500, randY(), -21000}, val = 2.1 },
+		{ type = "slv_chunk_lrg02", pos = {24962, randY(), -20286}, val = 1.9 },
+		{ type = "slv_chunk_lrg02", pos = {2260, randY(), -27817}, val = 1.5 },
+		{ type = "slv_chunk_lrg04", pos = {15508, randY(), -22762}, val = 1.8 },
+
+		{ type = "slv_chunk_lrg02", pos = {-13707, randY(), -23015}, val = 2.5 },
+		{ type = "slv_chunk_lrg02", pos = {-24875, randY(), -19968}, val = 2 },
+		{ type = "slv_chunk_lrg02", pos = {-22704, randY(), -21587}, val = 1.5 },
+		{ type = "slv_chunk_lrg01", pos = {-17964, randY(), -23272}, val = 2 },
+		{ type = "slv_chunk_lrg01", pos = {-30770, randY(), -17572}, val = 3.25 },
+		{ type = "slv_chunk_lrg04", pos = {-7210, randY(), -26853}, val = 0.9 },
+		{ type = "slv_chunk_lrg04", pos = {-20286, randY(), -21516}, val = 2.1 },
+		{ type = "slv_chunk_lrg04", pos = {-27402, randY(), -19373}, val = 1.9 },
+		{ type = "slv_chunk_sml03", pos = {-119, randY(), -49325}, val = 1.5 },
+		{ type = "slv_chunk_lrg04", pos = {-26402, randY(), -21373}, val = 1.8 },
+
+		{ type = "slv_chunk_sml03", pos = {0, randY(), -47500}, val = 2 },
+		{ type = "slv_chunk_sml03", pos = {403504, randY(), -53863}, val = 2 }
 	};
-	for i, attribs in debris_attribs do
-		addSalvage(attribs.type, attribs.pos, 100, 0, 0, 0, 0);
+	for _, attribs in debris_attribs do
+		addSalvage(attribs.type, attribs.pos, attribs.val * 100, 0, 0, 0, 0);
 	end
 end
 
@@ -473,14 +481,22 @@ function DetermChunk()
 	addPoint("StartPos4", {-24874, 0, -29766}, {0, 90, 0});
 	addPoint("StartPos5", {-30244, 0, -29277}, {0, 90, 0});
 
+	-- central 'X' radiation:
+	for y = -7500, 7500, 500 do
+		makeCentralXNebula(y, 40);
+	end
+
+	-- triangle 'home' clouds
+	makeTriangleClouds(2500);
+
 	-- patches close to the central X:
 	makeCentralRUs();
 
 	-- patches in the triangle clouds:
-	resourcePatch({38500, 0, -2000}, "medium");
-	addSalvage("Slv_Chunk_Lrg03", {39000, 100, -1900}, 200, 0, 0, 0, 0); -- 1400ru
-	resourcePatch({-38500, 0, -1000}, "medium");
-	addSalvage("Slv_Chunk_Lrg03", {-39000, -100, -900}, 200, 0, 0, 0, 0); -- 1400ru
+	resourcePatch({35000, 0, -2000}, "medium");
+	addSalvage("Slv_Chunk_Lrg03", {32000, 100, -1900}, 250, 0, 0, 0, 0);
+	resourcePatch({-35000, 0, -1000}, "medium");
+	addSalvage("Slv_Chunk_Lrg03", {-32000, -100, -900}, 250, 0, 0, 0, 0);
 
 	-- patches in the grooves of the center X:
 	resourcePatch({0, 0, -11500}, "medium");
@@ -494,14 +510,6 @@ function DetermChunk()
 end
 
 function NonDetermChunk()
-	-- central radiation:
-	for y = -7500, 7500, 500 do
-		makeCentralXNebula(y, 40);
-	end
-
-	-- triangle 'home' clouds
-	makeTriangleClouds(2500);
-
 	setWorldBoundsInner({0, 0, 0}, {90000, 7500, 90000})
 
 	fogSetActive(0)

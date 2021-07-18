@@ -14,7 +14,7 @@ LevelList = {
 	{
 		Tags = "6p",
 		Name = "the-glade",
-		Desc = "The Glade (1 vs 1 | 4 spectators)",
+		Desc = "The Glade",
 		MaxPlayers = 6,
 	},
 }
