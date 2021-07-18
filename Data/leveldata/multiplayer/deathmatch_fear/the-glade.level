@@ -504,11 +504,32 @@ function DetermChunk()
 	makeSmallPatches();
 
 	-- debris band:
-	makeDebrisBand();
+	addSalvage("slv_chunk_lrg03", {3339, 0, -27093}, 200, 0, 0, 0, 0)
+	addSalvage("slv_chunk_lrg03", {-3477, 0, -24427}, 200, 0, 0, 0, 0)
+	addSalvage("slv_chunk_lrg03", {67, 0, -23690}, 200, 0, 0, 0, 0)
+	addSalvage("slv_chunk_lrg03", {-2097, 0, -34580}, 200, 0, 0, 0, 0)
+	addSalvage("slv_chunk_lrg03", {11804, 0, -25535}, 200, 0, 0, 0, 0)
+	addSalvage("slv_chunk_lrg03", {18464, 0, -28316}, 200, 0, 0, 0, 0)
+	addSalvage("slv_chunk_lrg03", {22444, 0, -21548}, 200, 0, 0, 0, 0)
+	addSalvage("slv_chunk_lrg03", {-17147, 0, -27738}, 200, 0, 0, 0, 0)
+	addSalvage("slv_chunk_lrg03", {-21054, 0, -25148}, 200, 0, 0, 0, 0)
+	addSalvage("slv_chunk_lrg03", {-21153, 0, -19854}, 200, 0, 0, 0, 0)
+	addSalvage("slv_chunk_lrg01", {23986, 0, -27768}, 200, 0, 0, 0, 0)
+	addSalvage("slv_chunk_lrg01", {8299, 0, -31360}, 200, 0, 0, 0, 0)
+	addSalvage("slv_chunk_lrg01", {-9841, 0, -30998}, 200, 0, 0, 0, 0)
+	addSalvage("slv_chunk_lrg01", {-15869, 0, -24984}, 200, 0, 0, 0, 0)
+	addSalvage("slv_chunk_lrg01", {-25756, 0, -25587}, 200, 0, 0, 0, 0)
+	addSalvage("slv_chunk_lrg01", {27471, 0, -23830}, 200, 0, 0, 0, 0)
+	addSalvage("slv_chunk_lrg05", {2472, 0, -20325}, 200, 0, 0, 0, 0)
+	addSalvage("slv_chunk_lrg05", {-3898, 0, -19922}, 200, 0, 0, 0, 0)
+	addSalvage("slv_chunk_lrg05", {-12721, 0, -29392}, 200, 0, 0, 0, 0)
+	addSalvage("slv_chunk_lrg05", {12554, 0, -30543}, 200, 0, 0, 0, 0)
+	addSalvage("slv_chunk_lrg05", {19766, 0, -25560}, 200, 0, 0, 0, 0)
+	
+	setWorldBoundsInner({0, 0, 0}, {90000, 7500, 90000})
 end
 
 function NonDetermChunk()
-	setWorldBoundsInner({0, 0, 0}, {90000, 7500, 90000})
 
 	fogSetActive(0)
 	setGlareIntensity(0.25)
