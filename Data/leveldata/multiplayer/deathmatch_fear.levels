@@ -11,5 +11,10 @@ Tags = "dm,hw2,dm_hw2,hw1,dm_hw1"
 --TagSets = "hw2"
 
 LevelList = {
-
+	{
+		Tags = "6p",
+		Name = "the-glade",
+		Desc = "The Glade (1 vs 1 | 4 spectators)",
+		MaxPlayers = 6,
+	},
 }
